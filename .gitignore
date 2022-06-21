@@ -1,2 +1,4 @@
 /storage
 /init.sql
+
+.env
