@@ -82,6 +82,9 @@ services:
   pgadmin:
     container_name: pgadmin4
     image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
     ports:
     - published: 5050
       target: 80
@@ -141,7 +144,6 @@ services:
     ports:
     - 127.0.0.1:8080:8080/tcp
     restart: always
-
   minio:
     container_name: minio
     image: minio/minio
@@ -153,7 +155,6 @@ services:
     command: server --console-address ":9001" /data
     networks:
       prefect-server: null
-
   mlflow:
     restart: always
     build: ./mlflow
@@ -162,7 +163,7 @@ services:
         - minio
         - postgres
     ports:
-        - "5000:5000"
+        - "5001:5000"
     environment:
         - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
         - AWS_ACCESS_KEY_ID=minio_access_key
