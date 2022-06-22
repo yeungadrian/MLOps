@@ -145,6 +145,7 @@ services:
     - 127.0.0.1:8080:8080/tcp
     restart: always
   minio:
+    restart: always
     container_name: minio
     image: minio/minio
     ports:
