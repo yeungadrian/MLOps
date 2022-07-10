@@ -16,18 +16,18 @@ Simple modern mlops for individuals
 
 ### Requirements:
 - Docker
-
-### Commands to run 
-```
-Windows
-docker-compose.exe pull
-docker-compose.exe up --build
-
-Mac
-docker-compose up --build
-```
 - Change .env_template to .env and use your own secrets
 
+### Commands to run 
+Windows:
+```
+docker-compose.exe pull
+docker-compose.exe up --build
+```
+Mac:
+```
+docker-compose up --build
+```
 
 ### Limitations
 - Question mark on docker-compose for production
@@ -38,4 +38,4 @@ docker-compose up --build
 - [ ] Feast
 - [ ] MLServer
 - [ ] More complex k8s setup
-- [ ] - [ ] Cloud provider, e.g. GCP
+- [ ] Cloud provider, e.g. GCP
