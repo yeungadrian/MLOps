@@ -26,14 +26,16 @@ docker-compose.exe up --build
 Mac
 docker-compose up --build
 ```
+- Change .env_template to .env and use your own secrets
+
 
 ### Limitations
 - Question mark on docker-compose for production
 - Use docker swarm or k8s instead
 
 ### Roadmap
-- [ ] Move secrets to .env
+- [x] Move secrets to .env
 - [ ] Feast
 - [ ] MLServer
-- [ ] Cloud provider, e.g. GCP
 - [ ] More complex k8s setup
+- [ ] - [ ] Cloud provider, e.g. GCP
