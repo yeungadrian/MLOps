@@ -6,8 +6,8 @@ Simple modern mlops for individuals
 - Simple to deploy
 
 ### Components
-- [x] Data Store (Minio / PostgreSQL / Feast?)
-- [x] Experiment Tracking (MLFlow)
+- [x] Data Store (Minio / PostgreSQL / Feast?) 
+- [x] Experiment Tracking (MLFlow) https://mlflow.org/docs/latest/tracking.html#amazon-s3-and-s3-compatible-storage
 - [x] Workflow & Dataflow (Prefect)
 - [ ] Model Serving (FastAPI? / Seldon?)
 
