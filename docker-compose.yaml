@@ -37,7 +37,7 @@ services:
     environment:
       PREFECT_CORE_VERSION: 1.2.2
       PREFECT_SERVER_DB_CMD: prefect-server database upgrade -y
-      PREFECT_SERVER__DATABASE__CONNECTION_URL: postgresql://prefect:test-password@postgres:5432/prefect_server
+      PREFECT_SERVER__DATABASE__CONNECTION_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB
       PREFECT_SERVER__HASURA__ADMIN_SECRET: hasura-secret-admin-secret
       PREFECT_SERVER__HASURA__HOST: hasura
     healthcheck:
@@ -59,7 +59,7 @@ services:
       postgres:
         condition: service_started
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgresql://prefect:test-password@postgres:5432/prefect_server
+      HASURA_GRAPHQL_DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DB
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_LOG_LEVEL: warn
       HASURA_GRAPHQL_QUERY_PLAN_CACHE_SIZE: 100
@@ -83,8 +83,8 @@ services:
     container_name: pgadmin4
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
     - published: 5050
       target: 80
@@ -99,14 +99,14 @@ services:
     volumes:
     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
-      POSTGRES_DB: prefect_server
-      POSTGRES_PASSWORD: test-password
-      POSTGRES_USER: prefect
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
     healthcheck:
       interval: 10s
       retries: 60
       start_period: 2s
-      test: pg_isready -q -d $${POSTGRES_DB} -U $${POSTGRES_USER} || exit 1
+      test: pg_isready -q -d $POSTGRES_DB -U $POSTGRES_USER || exit 1
       timeout: 2s
     image: postgres:latest
     networks:
@@ -167,9 +167,9 @@ services:
         - "5001:5000"
     environment:
         - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
-        - AWS_ACCESS_KEY_ID=minio_access_key
-        - AWS_SECRET_ACCESS_KEY=minio_secret_key
-    command: mlflow server --backend-store-uri postgresql+psycopg2://prefect:test-password@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0
+        - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY}
+        - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY}
+    command: mlflow server --backend-store-uri postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$MLFLOW_DB_TABLE --default-artifact-root s3://mlflow/ --host 0.0.0.0
     networks:
       prefect-server: null
 

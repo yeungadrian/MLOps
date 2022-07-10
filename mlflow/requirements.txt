@@ -1,4 +1,4 @@
 
 psycopg2==2.9.3
-mlflow==1.26.1
+mlflow==1.27.0
 protobuf==3.19.0
