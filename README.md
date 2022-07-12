@@ -29,6 +29,17 @@ Mac:
 docker-compose up --build
 ```
 
+Set Minio Credentials:
+```
+cat <<EOF > ~/.aws/credentials
+[default]
+aws_access_key_id=
+aws_secret_access_key=
+EOF
+```
+
+Manually create mlflow bucket in mlflow at localhost:5001
+
 ### Limitations
 - Question mark on docker-compose for production
 - Use docker swarm or k8s instead
