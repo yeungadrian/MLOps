@@ -65,8 +65,10 @@ services:
         - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
         - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-    command: mlflow server --backend-store-uri postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0
+    command: >
+      bash -c "mlflow db upgrade postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow
+      && mlflow server --backend-store-uri postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0"
     networks:
       mlops: null
 
-version: '3.7'
+version: '1.2'
