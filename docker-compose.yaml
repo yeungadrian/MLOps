@@ -12,8 +12,6 @@ services:
     - published: 5050
       target: 80
     restart: always
-    networks:
-      mlops: null
   postgres:
     command:
     - postgres
@@ -32,8 +30,6 @@ services:
       test: pg_isready -q -d $POSTGRES_DB -U $POSTGRES_USER || exit 1
       timeout: 2s
     image: postgres:latest
-    networks:
-      mlops: null
     ports:
     - 127.0.0.1:5432:5432/tcp
     restart: always
@@ -50,8 +46,6 @@ services:
     volumes:
       - ./storage/minio:/data
     command: server --console-address ":9001" /data
-    networks:
-      mlops: null
   mlflow:
     restart: always
     build: ./mlflow
@@ -68,7 +62,6 @@ services:
     command: >
       bash -c "mlflow db upgrade postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow
       && mlflow server --backend-store-uri postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0"
-    networks:
-      mlops: null
+
 
 version: '1.2'
