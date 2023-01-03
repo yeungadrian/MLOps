@@ -1,38 +1,43 @@
 # mlops
-Simple modern mlops for individuals
+Simple-ish modern mlops for individuals
 
 ### Requirements for modern mlops
 - Free and open source
 - Simple to deploy
 
 ### Components
-- [x] Data Store (Minio / PostgreSQL / Feast?) 
+- [X] Notebooks / Analysis (VSCode / Python)
+- [x] Data Store (Minio / PostgreSQL) 
 - [x] Experiment Tracking (MLFlow) https://mlflow.org/docs/latest/tracking.html#amazon-s3-and-s3-compatible-storage
-- [x] Workflow & Dataflow (Prefect)
-- [ ] Model Serving (FastAPI? / Seldon?)
+- [x] Workflow & Dataflow (Prefect / Argo)
+- [x] Model Serving (FastAPI)
+- [X] Code Repository (Github)
 
 ### Architecture
-![Alt text](architecture.png)
+![Alt text](assets/architecture.png)
 
-### Requirements:
-- Docker
+### Setup
 - Change .env_template to .env and use your own secrets
-
-### Commands to run 
-
 ```
 docker-compose up --build
 ```
 
-Manually create mlflow bucket in mlflow at localhost:5001
+## Useful resources
+- https://mlops.neptune.ai
+- https://ml-ops.org
 
-### Limitations
-- Question mark on docker-compose for production
-- Use docker swarm or k8s instead
+## .env file
+```
+POSTGRES_DB=
+POSTGRES_PASSWORD=
+POSTGRES_USER=
 
-### Roadmap
-- [x] Move secrets to .env
-- [ ] Feast
-- [ ] MLServer
-- [ ] More complex k8s setup
-- [ ] Cloud provider, e.g. GCP
+PGADMIN_DEFAULT_EMAIL=
+PGADMIN_DEFAULT_PASSWORD=
+
+MINIO_ROOT_USER=
+MINIO_ROOT_PASSWORD= 
+
+MINIO_ACCESS_KEY=
+MLFLOW_DB_TABLE=
+```

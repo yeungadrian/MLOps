@@ -18,7 +18,7 @@ services:
     - -c
     - max_connections=150
     volumes:
-    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./mlflow/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
