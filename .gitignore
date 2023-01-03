@@ -132,3 +132,4 @@ dmypy.json
 gha-creds-*.json
 
 /storage
+.DS Store
