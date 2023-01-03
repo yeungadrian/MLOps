@@ -19,23 +19,9 @@ Simple modern mlops for individuals
 - Change .env_template to .env and use your own secrets
 
 ### Commands to run 
-Windows:
-```
-docker-compose.exe pull
-docker-compose.exe up --build
-```
-Mac:
+
 ```
 docker-compose up --build
-```
-
-Set Minio Credentials:
-```
-cat <<EOF > ~/.aws/credentials
-[default]
-aws_access_key_id=
-aws_secret_access_key=
-EOF
 ```
 
 Manually create mlflow bucket in mlflow at localhost:5001

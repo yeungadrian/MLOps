@@ -60,8 +60,22 @@ services:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
         - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     command: >
-      bash -c "mlflow db upgrade postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow
-      && mlflow server --backend-store-uri postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0"
+      bash -c "mlflow server --backend-store-uri postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow --default-artifact-root s3://mlflow/ --host 0.0.0.0
+      && mlflow db upgrade postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/mlflow"
+  fastapi:
+    restart: always
+    build: ./fastapi
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000
+    container_name: fastapi
+    depends_on:
+        - mlflow
+    environment:
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - MLFLOW_TRACKING_URI=http://mlflow:5000
+        - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+    ports:
+      - 8000:8000
 
 
-version: '1.2'
+version: '1.3'

@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "ModelServing"
+version = "0.1.0"
+description = ""
+authors = ["adrian.yeung"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+notebook = "^6.4.10"
+pre-commit = "^2.19.0"
+scikit-learn = "^1.1.1"
+mlflow = "2.0.1"
+python-dotenv = "^0.21.0"
+boto3 = "^1.26.31"
+black = "^22.12.0"
+llvmlite = "^0.39.1"
+fastapi = "^0.88.0"
+uvicorn = "^0.20.0"
+isort = "^5.11.3"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+pre-commit = "^2.17.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+	\.git
+| \.hg
+| \.mypy_cache
+| \.tox
+| \.venv
+| _build
+| buck-out
+| build   
+)/ 
+'''
