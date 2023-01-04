@@ -1,4 +1,4 @@
-# mlops
+# MLOps
 Simple-ish modern mlops for individuals
 
 ### Requirements for modern mlops
