@@ -42,4 +42,4 @@ MLFLOW_DB_TABLE=
 ```
 
 ## Backlog
-- [] Ray Serve (with FastAPI)
+- [ ] Ray Serve (with FastAPI)
