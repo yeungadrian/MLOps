@@ -40,3 +40,6 @@ MINIO_ROOT_PASSWORD=
 MINIO_ACCESS_KEY=
 MLFLOW_DB_TABLE=
 ```
+
+## Backlog
+- [] Ray Serve (with FastAPI)
