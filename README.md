@@ -16,8 +16,7 @@ Simple-ish modern mlops for individuals
 ### Architecture
 ![Alt text](assets/architecture.png)
 
-### Setup
-- Change .env_template to .env and use your own secrets
+### Run locally
 ```
 docker-compose up --build
 ```
