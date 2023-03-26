@@ -24,7 +24,7 @@ spec:
           - name: PREFECT_API_URL
             valueFrom:
               secretKeyRef:
-                name: prefect 
+                name: prefect
                 key: PREFECT_API_URL
           - name: PREFECT_API_KEY
             valueFrom:
@@ -58,4 +58,3 @@ roleRef:
   kind: Role
   name: prefect-agent
   apiGroup: rbac.authorization.k8s.io
-

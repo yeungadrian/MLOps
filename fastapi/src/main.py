@@ -2,19 +2,19 @@ import logging
 
 import yaml
 from dotenv import load_dotenv
+from prometheus_fastapi_instrumentator import Instrumentator
 
 with open("logging.yml", "r") as stream:
     config = yaml.load(stream, Loader=yaml.FullLoader)
-    
+
 logging.config.dictConfig(config)
 
 load_dotenv()
 
 
-from fastapi import FastAPI  # noqa
 from src.api.api import api_router  # noqa
 
-from prometheus_fastapi_instrumentator import Instrumentator
+from fastapi import FastAPI  # noqa
 
 tags_metadata = [
     {

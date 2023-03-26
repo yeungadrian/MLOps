@@ -1,6 +1,6 @@
-from fastapi import APIRouter
-
 from src.api.endpoints import iris
+
+from fastapi import APIRouter
 
 api_router = APIRouter()
 

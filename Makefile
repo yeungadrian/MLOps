@@ -6,11 +6,11 @@ delete-cluster:
 
 upload-prefect-image:
 	docker build ./prefect -t prefect
-	kind load --name local-dev docker-image prefect:latest	
+	kind load --name local-dev docker-image prefect:latest
 
 setup-prefect-ns:
 	kubectl create namespace prefect
-	kubectl create secret generic prefect --from-env-file=.env  -n prefect	
+	kubectl create secret generic prefect --from-env-file=.env  -n prefect
 
 deploy-prefect:
 	make setup-prefect-ns
@@ -32,14 +32,14 @@ undeploy-argo:
 # deletes all the services and k8s cluster
 delete-all:
 	helm delete $(shell helm list -aq)
-	kind delete cluster --name local-dev 
+	kind delete cluster --name local-dev
 
 node_port=$(shell kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services argo-workflows)
 node_ip=$(shell kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
 
-# returns the node url to access from external world	
+# returns the node url to access from external world
 node-url:
-	@echo "http://${node_ip}:${node_port}" 
+	@echo "http://${node_ip}:${node_port}"
 	@ echo "[[ NOTE: If using macOS, use http://localhost:8080 , made possible by k8s-cluster-config.yaml extraPortMappings ]]"
 
 status:

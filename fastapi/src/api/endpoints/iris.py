@@ -1,19 +1,18 @@
 import logging
 from typing import Any
 
-import mlflow
 import numpy as np
-from fastapi import APIRouter, HTTPException
-
 from src.api.schemas import Iris, IrisPrediction
+
+import mlflow
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
 iris_map = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
 logging.info("Loading iris classification model")
-import os
-print(os.environ.get("AWS_ACCESS_KEY_ID"))
+
 model = mlflow.sklearn.load_model("models:/iris_classifer/Production")
 
 
