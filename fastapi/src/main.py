@@ -10,8 +10,11 @@ logging.config.dictConfig(config)
 
 load_dotenv()
 
+
 from fastapi import FastAPI  # noqa
 from src.api.api import api_router  # noqa
+
+from prometheus_fastapi_instrumentator import Instrumentator
 
 tags_metadata = [
     {
@@ -23,3 +26,5 @@ tags_metadata = [
 app = FastAPI(openapi_tags=tags_metadata)
 
 app.include_router(api_router)
+
+Instrumentator().instrument(app).expose(app)

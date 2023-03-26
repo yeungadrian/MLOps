@@ -1,3 +1,6 @@
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
 networks:
   mlops:
     name: mlops
@@ -76,6 +79,28 @@ services:
         - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
     ports:
       - 8000:8000
+  prometheus:
+    container_name: prometheus
+    hostname: prometheus
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: grafana/grafana
+    volumes:
+      - ./grafana/grafana_datasources.yml:/etc/grafana/provisioning/datasources/all.yaml
+      - ./grafana/grafana_config.ini:/etc/grafana/config.ini
+      - grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
 
 
 version: '1.3'

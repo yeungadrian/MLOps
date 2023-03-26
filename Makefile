@@ -44,3 +44,6 @@ node-url:
 
 status:
 	@kubectl get pods
+
+poetry-packages-file:
+	poetry export -f requirements.txt --without-hashes > ./fastapi/requirements.txt

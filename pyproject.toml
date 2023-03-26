@@ -6,23 +6,24 @@ authors = ["adrian.yeung"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-notebook = "^6.4.10"
-pre-commit = "^2.19.0"
 scikit-learn = "^1.1.1"
 mlflow = "2.0.1"
 python-dotenv = "^0.21.0"
 boto3 = "^1.26.31"
-black = "^22.12.0"
 llvmlite = "^0.39.1"
 fastapi = "^0.88.0"
 uvicorn = "^0.20.0"
+numba = "^0.56.4"
+prometheus-fastapi-instrumentator = "^6.0.0"
 
 
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
-pre-commit = "^2.17.0"
 isort = "^5.11.3"
+notebook = "^6.4.10"
+pre-commit = "^2.19.0"
+black = "^22.12.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
