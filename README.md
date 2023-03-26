@@ -42,4 +42,4 @@ MLFLOW_DB_TABLE=
 ```
 
 ## Backlog
-- [ ] Ray Serve (with FastAPI)
+- [ ] Model Monitoring: https://github.com/evidentlyai/evidently
