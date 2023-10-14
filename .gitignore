@@ -129,7 +129,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-gha-creds-*.json
-
-/storage
-.DS Store
+# Local storage
+/deploy
+/mydata
+/postgres-data
+/volumes
