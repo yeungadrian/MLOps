@@ -131,7 +131,6 @@ services:
     container_name: mlflow-server
     depends_on:
         - minio
-        - db
     ports:
         - "5001:5000"
     environment:
