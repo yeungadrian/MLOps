@@ -1,8 +1,94 @@
-version: '3.5'
-
 services:
-# LABELBOX
+  # MinIO
+  minio:
+    container_name: minio
+    image: minio/minio:latest
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    ports:
+      - "9001:9001"
+      - "9000:9000"
+    volumes:
+      - minio:/data
+    command: minio server /data --console-address ":9001" 
+    healthcheck:
+      test: mc ready local
+      interval: 15s
+      timeout: 5s
+      retries: 1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 200M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+  createbuckets:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+        restart: false
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      /usr/bin/mc mb myminio/mlflow;
+      exit 0;
+      "
+  # PostgreSQL
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    volumes:
+      - ./pg:/docker-entrypoint-initdb.d
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "postgres"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+        reservations:
+          cpus: "0.01"
+          memory: 6M
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=80
+      - GUNICORN_THREADS=1
+    ports:
+      - "15432:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 150M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+  # LABELBOX
   nginx:
+    container_name: label-studio-nginx
     build: .
     image: heartexlabs/label-studio:latest
     restart: unless-stopped
@@ -13,18 +99,19 @@ services:
       - app
     environment:
       - LABEL_STUDIO_HOST=${LABEL_STUDIO_HOST:-}
-    #   Optional: Specify SSL termination certificate & key
-    #   Just drop your cert.pem and cert.key into folder 'deploy/nginx/certs'
-    #      - NGINX_SSL_CERT=/certs/cert.pem
-    #      - NGINX_SSL_CERT_KEY=/certs/cert.key
     volumes:
-      - ./mydata:/label-studio/data:rw
-      - ./deploy/nginx/certs:/certs:ro
-    #   Optional: Override nginx default conf
-    #      - ./deploy/my.conf:/etc/nginx/nginx.conf
+      - label-studio:/label-studio/data:rw
     command: nginx
-
-  app:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 10M
+        reservations:
+          cpus: "0.01"
+          memory: 6M
+  app: # nginx expects this to be called app
+    container_name: label-studio-app
     stdin_open: true
     tty: true
     build: .
@@ -33,114 +120,63 @@ services:
     expose:
       - "8000"
     depends_on:
-      - db
+      postgres:
+        condition: service_healthy
+        restart: true
     environment:
       - DJANGO_DB=default
-      - POSTGRE_NAME=postgres
-      - POSTGRE_USER=postgres
-      - POSTGRE_PASSWORD=postgres
-      - POSTGRE_PORT=5432
-      - POSTGRE_HOST=db
+      - POSTGRE_NAME=labelstudio
+      - POSTGRE_USER=${POSTGRES_USER}
+      - POSTGRE_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRE_PORT=${POSTGRES_PORT}
+      - POSTGRE_HOST=${POSTGRES_HOST}
       - LABEL_STUDIO_HOST=${LABEL_STUDIO_HOST:-}
       - JSON_LOG=1
-    #      - LOG_LEVEL=DEBUG
+      - UWSGI_PROCESSES=1
     volumes:
-      - ./mydata:/label-studio/data:rw
+      - label-studio:/label-studio/data:rw
     command: label-studio-uwsgi
-
-  db:
-    image: postgres:latest
-    hostname: db
-    restart: unless-stopped
-    # Optional: Enable TLS on PostgreSQL
-    # Just drop your server.crt and server.key into folder 'deploy/pgsql/certs'
-    # NOTE: Both files must have permissions u=rw (0600) or less
-    #    command: >
-    #      -c ssl=on
-    #      -c ssl_cert_file=/var/lib/postgresql/certs/server.crt
-    #      -c ssl_key_file=/var/lib/postgresql/certs/server.key
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ${POSTGRES_DATA_DIR:-./postgres-data}:/var/lib/postgresql/data
-      - ./deploy/pgsql/certs:/var/lib/postgresql/certs:ro
-# MILVUS
-  etcd:
-    container_name: milvus-etcd
-    image: quay.io/coreos/etcd:v3.5.5
-    environment:
-      - ETCD_AUTO_COMPACTION_MODE=revision
-      - ETCD_AUTO_COMPACTION_RETENTION=1000
-      - ETCD_QUOTA_BACKEND_BYTES=4294967296
-      - ETCD_SNAPSHOT_COUNT=50000
-    volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
-    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
-    healthcheck:
-      test: ["CMD", "etcdctl", "endpoint", "health"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-
-  minio:
-    container_name: milvus-minio
-    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
-    environment:
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
-    ports:
-      - "9001:9001"
-      - "9000:9000"
-    volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
-    command: minio server /minio_data --console-address ":9001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-
-  standalone:
-    container_name: milvus-standalone
-    image: milvusdb/milvus:v2.3.1
-    command: ["milvus", "run", "standalone"]
-    environment:
-      ETCD_ENDPOINTS: etcd:2379
-      MINIO_ADDRESS: minio:9000
-    volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
-      interval: 30s
-      start_period: 90s
-      timeout: 20s
-      retries: 3
-    ports:
-      - "19530:19530"
-      - "9091:9091"
-    depends_on:
-      - "etcd"
-      - "minio"
-
-# MLFLOW
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 250M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+  # MLFLOW
   mlflow:
+    container_name: mlflow
     restart: always
     image: ghcr.io/mlflow/mlflow:latest
-    container_name: mlflow-server
     depends_on:
-        - minio
-    ports:
-        - "5001:5000"
+      postgres:
+        condition: service_healthy
+        restart: true
+      minio:
+        condition: service_healthy
+        restart: true
     environment:
-        - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
-        - AWS_ACCESS_KEY_ID=minioadmin
-        - AWS_SECRET_ACCESS_KEY=minioadmin
-    command: mlflow server --default-artifact-root s3://mlflow/ --host 0.0.0.0
+      - GUNICORN_THREADS=1
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+    ports:
+      - "5001:5001"
+    command: >
+      bash -c "pip install psycopg2-binary && 
+      mlflow server --artifacts-destination s3://mlflow --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/mlflowdb --workers 2 --port 5001 --host 0.0.0.0"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 400M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
 
-
-
-networks:
-  default:
-    name: mlops
+volumes:
+  label-studio:
+  minio:
+  postgres:
+  pgadmin:

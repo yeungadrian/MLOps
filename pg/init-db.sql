@@ -1,0 +1,4 @@
+CREATE DATABASE mlflowdb;
+GRANT ALL PRIVILEGES ON DATABASE mlflowdb TO postgres;
+CREATE DATABASE labelstudio;
+GRANT ALL PRIVILEGES ON DATABASE mlflowdb TO postgres;
