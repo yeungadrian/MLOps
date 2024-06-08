@@ -36,8 +36,8 @@ docker-compose up -d
 ```
 
 ### Roadmap
-- [] Explore Vector databases (Weaviate vs Chroma vs Milvus, leaning towards milvus)
-- [] Minikube / k8s alternative setup
+- [ ] Explore Vector databases (Weaviate vs Chroma vs Milvus, leaning towards milvus)
+- [ ] Minikube / k8s alternative setup
 
 ### Troubleshooting
 - #### Deploy resources:
