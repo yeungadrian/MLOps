@@ -43,9 +43,10 @@ services:
     image: postgres:latest
     restart: always
     environment:
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
     volumes:
       - ./pg:/docker-entrypoint-initdb.d
       - postgres:/var/lib/postgresql/data
@@ -57,8 +58,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: 50M
+          cpus: "0.2"
+          memory: 75M
         reservations:
           cpus: "0.01"
           memory: 6M
@@ -165,12 +166,35 @@ services:
       - "5001:5001"
     command: >
       bash -c "pip install psycopg2-binary && 
-      mlflow server --artifacts-destination s3://mlflow --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/mlflowdb --workers 2 --port 5001 --host 0.0.0.0"
+      mlflow server --artifacts-destination s3://mlflow --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/mlflowdb --workers 1 --port 5001 --host 0.0.0.0"
     deploy:
       resources:
         limits:
           cpus: "0.5"
           memory: 400M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+  # Langfuse
+  langfuse:
+    image: ghcr.io/langfuse/langfuse:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/langfuse 
+      - NEXTAUTH_SECRET=mysecret
+      - SALT=mysalt
+      - NEXTAUTH_URL=http://localhost:3000
+      - TELEMETRY_ENABLED=${TELEMETRY_ENABLED:-false}
+      - LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES=${LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES:-false}
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 300M
         reservations:
           cpus: "0.025"
           memory: 50M

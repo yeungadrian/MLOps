@@ -10,13 +10,15 @@ Set of core tools that can be reused across ML projects.
 - [x] Data stores (MinIO / PostgreSQL)
 - [x] PostgreSQL Tools (pgAdmin)
 - [x] Data labeller (Label Studio)
-- [x] Experiment Tracking (MLflow) 
+- [x] Experiment Tracking (MLflow)
+- [x] LLM Observability (Langfuse)
 
 ### Design
 ![Alt text](assets/mlops.png)
 
 ### Setup .env file
 ```
+POSTGRES_DATABASE=postgres
 POSTGRES_HOST=postgres
 POSTGRES_PASSWORD=password
 POSTGRES_PORT=5432
@@ -50,8 +52,10 @@ docker-compose up -d
 - [pgAdmin docker documentation](https://www.pgadmin.org/docs/pgadmin4/8.8/container_deployment.html)
 - [Label studio docker compose](https://labelstud.io/tutorials/segment_anything_model#Using-Docker-Compose-recommended)
 - [MLflow docker image](https://github.com/mlflow/mlflow/pkgs/container/mlflow)
+- [Langfuse repo](https://github.com/langfuse/langfuse)
 
 ### Clunky aspects
 - MLflow: image does not contain psycopg2. Workaround of running `pip install psycopg2` prior to launching server.
 - postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
 - MinIO: separate container created to create bucket for MLflow
+- Langfuse: no official image for arm
