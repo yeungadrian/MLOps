@@ -17,7 +17,7 @@ Simple modern open source mlops.
 ## Getting started 
 This setup requires docker and docker compose. Easiest way to get started is to install [docker desktop](https://docs.docker.com/desktop/install/mac-install/).
 
-Create a .env file with the following. Values below are only placeholders.
+Create a .env file with the following keys. Values below are only placeholders.
 ```
 POSTGRES_DATABASE=postgres
 POSTGRES_HOST=postgres
