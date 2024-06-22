@@ -2,24 +2,24 @@
 Simple modern open source mlops.
 
 - [MLOps](#mlops)
-    - [Requirements](#requirements)
-    - [Applications](#applications)
-    - [Design](#design)
-    - [Quickstart](#quickstart)
-    - [Roadmap](#roadmap)
-    - [Resources:](#resources)
-      - [Docker](#docker)
-      - [Kubernetes](#kubernetes)
-    - [Troubleshooting](#troubleshooting)
-    - [Clunky aspects](#clunky-aspects)
-    - [List of dependencies:](#list-of-dependencies)
+  - [Requirements](#requirements)
+  - [Applications](#applications)
+  - [Design](#design)
+  - [Quickstart](#quickstart)
+  - [Roadmap](#roadmap)
+  - [Resources:](#resources)
+    - [Docker](#docker)
+    - [Kubernetes](#kubernetes)
+  - [Troubleshooting](#troubleshooting)
+  - [Clunky aspects](#clunky-aspects)
+  - [List of dependencies:](#list-of-dependencies)
 
 
-### Requirements
+## Requirements
 - Free and open source
 - Simple to deploy
 
-### Applications
+## Applications
 - Data stores (MinIO & PostgreSQL)
 - Vector store (Milvus)
 - Data labeller (Label Studio)
@@ -29,10 +29,10 @@ Simple modern open source mlops.
     - pgAdmin: postgreSQL 
     - attu: Milvus
 
-### Design
+## Design
 ![Alt text](assets/mlops.png)
 
-### Quickstart 
+## Quickstart 
 1. Create ..env file
 ```
 POSTGRES_DATABASE=postgres
@@ -53,11 +53,11 @@ MINIO_ROOT_PASSWORD=password
 docker-compose up -d
 ```
 
-### Roadmap
+## Roadmap
 - [ ] Minikube / kind setup
 
-### Resources:
-#### Docker
+## Resources:
+### Docker
 - [PostgreSQL docker documentation](https://hub.docker.com/_/postgres/)
 - [MinIO dockerhub](https://hub.docker.com/r/minio/minio/#!)
 - [Milvus docker compose](https://milvus.io/docs/install_standalone-docker-compose.md)
@@ -66,24 +66,24 @@ docker-compose up -d
 - [Langfuse repo](https://github.com/langfuse/langfuse)
 - [pgAdmin docker documentation](https://www.pgadmin.org/docs/pgadmin4/8.8/container_deployment.html)
 - [attu github](https://github.com/zilliztech/attu)
-#### Kubernetes
+### Kubernetes
 TODO
 
-### Troubleshooting
-- #### Insufficient resources
+## Troubleshooting
+- Insufficient resources
     - Docker compose has been setup with minimum specs for my setup
     - Potential to run into out of memory exceptions on different setups / with newer version.
     - Remove deploy section under each service as a quick workaround
-- #### Latest version may introduce breaking changes
+- Latest version may introduce breaking changes
     - Images all currently point at the latest version of each service, which may require additional changes not present yet.
 
-### Clunky aspects
+## Clunky aspects
 - MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image)
 - postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
 - MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup.
 - Langfuse: no official image for arm
 
-### List of dependencies:
+## List of dependencies:
 - PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
 - MinIO: [repo](https://github.com/minio/minio)
 - Milvus: [repo](https://github.com/milvus-io/milvus)
