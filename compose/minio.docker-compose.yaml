@@ -1,0 +1,37 @@
+services:
+  minio:
+    container_name: minio
+    image: minio/minio:latest
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    ports:
+      - "9001:9001"
+      - "9000:9000"
+    volumes:
+      - minio:/data
+    command: minio server /data --console-address ":9001"
+    healthcheck:
+      test: mc ready local
+      interval: 15s
+      timeout: 5s
+      retries: 1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 200M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+  createbuckets:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+        restart: false
+    entrypoint: >
+      /bin/sh -c " /usr/bin/mc alias set myminio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}; /usr/bin/mc mb myminio/mlflow; exit 0; "
+
+volumes:
+  minio:
