@@ -39,7 +39,7 @@ services:
     environment:
       - DJANGO_DB=default
       - POSTGRE_NAME=labelstudio
-      - POSTGRE_USER=${POSTGRES_USER}
+      - POSTGRE_USER=postgres
       - POSTGRE_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRE_PORT=${POSTGRES_PORT}
       - POSTGRE_HOST=${POSTGRES_HOST}
