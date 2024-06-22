@@ -35,6 +35,11 @@ Run following command
 ```
 docker-compose up -d
 ```
+pgAdmin: [http//:localhost:15432](http//:localhost:15432)
+MLflow: [http//:localhost:5001](http//:localhost:5001)
+MinIO: [http//:localhost:9001](http//:localhost:9001)
+Label Studio: [http//:localhost:8080](http//:localhost:8080)
+Attu: [http//:localhost:8000](http//:localhost:8000)
 
 ## Roadmap
 - [ ] Minikube / kind setup
@@ -48,7 +53,7 @@ docker-compose up -d
 - [MLflow docker image](https://github.com/mlflow/mlflow/pkgs/container/mlflow)
 - [Langfuse repo](https://github.com/langfuse/langfuse)
 - [pgAdmin docker documentation](https://www.pgadmin.org/docs/pgadmin4/8.8/container_deployment.html)
-- [attu github](https://github.com/zilliztech/attu)
+- [Attu github](https://github.com/zilliztech/attu)
 ### Kubernetes
 TODO
 
