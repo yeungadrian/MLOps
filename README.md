@@ -1,6 +1,6 @@
 # MLOps
-Simple modern open source  mlops for individuals.
-Set of core tools that can be reused across ML projects.
+Simple modern open source mlops.
+Set of core tools that can be reused across projects.
 
 ### Requirements for modern mlops
 - Free and open source
@@ -8,10 +8,13 @@ Set of core tools that can be reused across ML projects.
 
 ### Components
 - [x] Data stores (MinIO / PostgreSQL)
-- [x] PostgreSQL Tools (pgAdmin)
+- [x] Vector Store (Milvus)
 - [x] Data labeller (Label Studio)
 - [x] Experiment Tracking (MLflow)
 - [x] LLM Observability (Langfuse)
+- [x] Admin Tools 
+    - pgAdmin: postgreSQL 
+    - attu: Milvus
 
 ### Design
 ![Alt text](assets/mlops.png)
@@ -38,14 +41,7 @@ docker-compose up -d
 ```
 
 ### Roadmap
-- [ ] Explore Vector databases (Weaviate vs Chroma vs Milvus, leaning towards milvus)
-- [ ] Minikube / k8s alternative setup
-
-### Troubleshooting
-- #### Deploy resources:
-    - Docker compose has been setup with minimum specs for my local
-    - May run into out of memory exceptions. Single workers may cause crashing. Consider increasing cpu ,memory and workers.
-    - Remove deploy section under each service as a quick workaround
+- [ ] Minikube / kind setup
 
 ### Resources:
 - [PostgreSQL docker documentation](https://hub.docker.com/_/postgres/)
@@ -59,3 +55,9 @@ docker-compose up -d
 - postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
 - MinIO: separate container created to create bucket for MLflow
 - Langfuse: no official image for arm
+
+### Troubleshooting
+- #### Deploy resources:
+    - Docker compose has been setup with minimum specs for my local
+    - May run into out of memory exceptions. Single workers may cause crashing. Consider increasing cpu ,memory and workers.
+    - Remove deploy section under each service as a quick workaround

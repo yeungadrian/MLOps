@@ -1,0 +1,82 @@
+services:
+  etcd:
+    container_name: milvus-etcd
+    image: quay.io/coreos/etcd:v3.5.5
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    volumes:
+      - etcd:/etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 100M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+
+  standalone:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.4.5
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+    - seccomp:unconfined
+    environment:
+      - ETCD_ENDPOINTS=etcd:2379
+      - MINIO_ADDRESS=minio:9000
+      - MINIO_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+      - MINIO_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - milvus:/var/lib/milvus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 30s
+      start_period: 90s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    depends_on:
+      - "etcd"
+      - "minio"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+
+  attu:
+    container_name: milvus-attu
+    image: zilliz/attu:v2.4
+    environment:
+      MILVUS_URL: milvus-standalone:19530
+    ports:
+      - "8099:3000"
+    depends_on:
+      - "standalone"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 200M
+        reservations:
+          cpus: "0.025"
+          memory: 50M
+
+
+volumes:
+  milvus:
+  etcd:
