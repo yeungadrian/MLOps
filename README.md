@@ -7,12 +7,12 @@ Simple modern open source mlops.
   - [Design](#design)
   - [Quickstart](#quickstart)
   - [Roadmap](#roadmap)
-  - [Resources:](#resources)
+  - [Resources](#resources)
     - [Docker](#docker)
     - [Kubernetes](#kubernetes)
   - [Troubleshooting](#troubleshooting)
   - [Clunky aspects](#clunky-aspects)
-  - [List of dependencies:](#list-of-dependencies)
+  - [List of dependencies](#list-of-dependencies)
 
 
 ## Requirements
@@ -56,7 +56,7 @@ docker-compose up -d
 ## Roadmap
 - [ ] Minikube / kind setup
 
-## Resources:
+## Resources
 ### Docker
 - [PostgreSQL docker documentation](https://hub.docker.com/_/postgres/)
 - [MinIO dockerhub](https://hub.docker.com/r/minio/minio/#!)
@@ -83,7 +83,7 @@ TODO
 - MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup.
 - Langfuse: no official image for arm
 
-## List of dependencies:
+## List of dependencies
 - PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
 - MinIO: [repo](https://github.com/minio/minio)
 - Milvus: [repo](https://github.com/milvus-io/milvus)
