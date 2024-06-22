@@ -1,5 +1,5 @@
 # MLOps
-Simple modern open source mlops.
+Simple open source MLOps.
 
 ## Design
 ![Alt text](assets/mlops.png)
@@ -40,8 +40,6 @@ Once the applications have started and are ready, you can access the application
 - pgAdmin: [http://localhost:15432](http://localhost:15432)
 - MLflow: [http://localhost:5001](http://localhost:5001)
 - MinIO: [http://localhost:9001](http://localhost:9001)
-- Label Studio: [http://localhost:8080](http://localhost:8080)
-- Attu: [http://localhost:8099](http://localhost:8000)
 
 ## Updating images
 The following commands will stop the containers, update images if new versions have been published and redeploy containers.
@@ -77,8 +75,8 @@ TODO
 
 ## Clunky aspects
 - MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image).
-- postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
-- Langfuse: no official image for arm.
+- postgreSQL: Setting up databases per application. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty. (Run commands in pgAdmin)
+- Langfuse: no official image for arm. (works fine for now)
 
 ## List of dependencies
 - PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
