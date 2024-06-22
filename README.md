@@ -26,8 +26,8 @@ Simple modern open source mlops
 - Experiment Tracking (MLflow)
 - LLM Observability (Langfuse)
 - Admin Tools 
-    - pgAdmin: postgreSQL 
-    - attu: Milvus
+    - pgAdmin: PostgreSQL 
+    - Attu: Milvus
 
 ## Design
 ![Alt text](assets/mlops.png)
@@ -91,4 +91,4 @@ TODO
 - MLflow: [repo](https://github.com/mlflow/mlflow)
 - Langfuse: [repo](https://github.com/zilliztech/attu)
 - pgAdmin: [repo](https://github.com/pgadmin-org/pgadmin4)
-- attu: [repo](https://github.com/zilliztech/attu)
+- Attu: [repo](https://github.com/zilliztech/attu)
