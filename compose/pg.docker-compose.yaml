@@ -7,12 +7,13 @@ services:
       - POSTGRES_DATABASE=${POSTGRES_DATABASE}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=postgres
     volumes:
       - ./pg:/docker-entrypoint-initdb.d
       - postgres:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready", "-d", "postgres" ]
-      interval: 15s
+      test: [ "CMD", "pg_isready", "-d", "postgres", "-U", "postgres" ]
+      interval: 10s
       timeout: 5s
       retries: 3
     deploy:

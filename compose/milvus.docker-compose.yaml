@@ -1,7 +1,7 @@
 services:
   etcd:
     container_name: milvus-etcd
-    image: quay.io/coreos/etcd:latest
+    image: gcr.io/etcd-development/etcd:v3.5.14 # Latest for etcd is last updated 2018
     environment:
       - ETCD_AUTO_COMPACTION_MODE=revision
       - ETCD_AUTO_COMPACTION_RETENTION=1000
@@ -47,8 +47,10 @@ services:
       - "19530:19530"
       - "9091:9091"
     depends_on:
-      - "etcd"
-      - "minio"
+      etcd:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -66,7 +68,8 @@ services:
     ports:
       - "8099:3000"
     depends_on:
-      - "standalone"
+      standalone:
+        condition: service_healthy
     deploy:
       resources:
         limits:

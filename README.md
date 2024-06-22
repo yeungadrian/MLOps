@@ -1,5 +1,5 @@
 # MLOps
-Simple modern open source mlops
+Simple modern open source mlops.
 
 ## Design
 ![Alt text](assets/mlops.png)
@@ -10,12 +10,12 @@ Simple modern open source mlops
 - Data labeller (Label Studio)
 - Experiment Tracking (MLflow)
 - LLM Observability (Langfuse)
-- Admin Tools 
+- Admin Tools:
     - pgAdmin: PostgreSQL 
     - Attu: Milvus
 
 ## Getting started 
-This setup requires docker and docker compose. Easiest way to get started is to install [docker desktop](https://docs.docker.com/desktop/install/mac-install/).
+This setup requires docker and docker compose. The easiest way to get started is to install [docker desktop](https://docs.docker.com/desktop/install/mac-install/).
 
 Create a .env file with the following keys. Values below are only placeholders.
 ```
@@ -31,15 +31,25 @@ MINIO_ROOT_USER=minio
 MINIO_ROOT_PASSWORD=password
 ```
 
-Run following command
+Now run the following command:
 ```
 docker-compose up -d
 ```
-pgAdmin: [http//:localhost:15432](http//:localhost:15432)
-MLflow: [http//:localhost:5001](http//:localhost:5001)
-MinIO: [http//:localhost:9001](http//:localhost:9001)
-Label Studio: [http//:localhost:8080](http//:localhost:8080)
-Attu: [http//:localhost:8000](http//:localhost:8000)
+
+Once the applications have started and are ready, you can access the applications on the following urls:
+- pgAdmin: [http://localhost:15432](http://localhost:15432)
+- MLflow: [http://localhost:5001](http://localhost:5001)
+- MinIO: [http://localhost:9001](http://localhost:9001)
+- Label Studio: [http://localhost:8080](http://localhost:8080)
+- Attu: [http://localhost:8099](http://localhost:8000)
+
+## Updating images
+The following commands will stop the containers, update images if new versions have been published and redeploy containers.
+```
+docker-compose stop
+docker-compose pull
+docker-compose up -d
+```
 
 ## Roadmap
 - [ ] Minikube / kind setup
@@ -66,10 +76,9 @@ TODO
     - Images all currently point at the latest version of each service, which may require additional changes not present yet.
 
 ## Clunky aspects
-- MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image)
+- MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image).
 - postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
-- MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup.
-- Langfuse: no official image for arm
+- Langfuse: no official image for arm.
 
 ## List of dependencies
 - PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
@@ -79,4 +88,4 @@ TODO
 - MLflow: [repo](https://github.com/mlflow/mlflow)
 - Langfuse: [repo](https://github.com/zilliztech/attu)
 - pgAdmin: [repo](https://github.com/pgadmin-org/pgadmin4)
-- attu: [repo](https://github.com/zilliztech/attu)
+- Attu: [repo](https://github.com/zilliztech/attu)

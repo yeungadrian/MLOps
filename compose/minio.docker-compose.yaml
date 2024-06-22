@@ -10,7 +10,9 @@ services:
       - "9000:9000"
     volumes:
       - minio:/data
-    command: minio server /data --console-address ":9001"
+    entrypoint: sh
+    command: -c 'mkdir -p /data/mlflow && minio server /data --console-address ":9001"'
+      
     healthcheck:
       test: mc ready local
       interval: 15s
@@ -23,23 +25,6 @@ services:
           memory: 200M
         reservations:
           cpus: "0.025"
-          memory: 50M
-  createbuckets:
-    image: minio/mc:latest
-    depends_on:
-      minio:
-        condition: service_healthy
-        restart: false
-    entrypoint: >
-      /bin/sh -c "/usr/bin/mc alias set myminio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}; 
-      /usr/bin/mc mb myminio/mlflow; exit 0;"
-    deploy:
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
-        reservations:
-          cpus: "0.1"
           memory: 50M
 
 volumes:
