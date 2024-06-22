@@ -1,17 +1,31 @@
 # MLOps
 Simple modern open source mlops.
 
+- [MLOps](#mlops)
+    - [Requirements](#requirements)
+    - [Applications](#applications)
+    - [Design](#design)
+    - [Quickstart](#quickstart)
+    - [Roadmap](#roadmap)
+    - [Resources:](#resources)
+      - [Docker](#docker)
+      - [Kubernetes](#kubernetes)
+    - [Troubleshooting](#troubleshooting)
+    - [Clunky aspects](#clunky-aspects)
+    - [List of dependencies:](#list-of-dependencies)
+
+
 ### Requirements
 - Free and open source
 - Simple to deploy
 
 ### Applications
-- [x] Data stores (MinIO & PostgreSQL)
-- [x] Vector Store (Milvus)
-- [x] Data labeller (Label Studio)
-- [x] Experiment Tracking (MLflow)
-- [x] LLM Observability (Langfuse)
-- [x] Admin Tools 
+- Data stores (MinIO & PostgreSQL)
+- Vector store (Milvus)
+- Data labeller (Label Studio)
+- Experiment Tracking (MLflow)
+- LLM Observability (Langfuse)
+- Admin Tools 
     - pgAdmin: postgreSQL 
     - attu: Milvus
 
@@ -43,15 +57,17 @@ docker-compose up -d
 - [ ] Minikube / kind setup
 
 ### Resources:
-#### Docker related
+#### Docker
 - [PostgreSQL docker documentation](https://hub.docker.com/_/postgres/)
 - [MinIO dockerhub](https://hub.docker.com/r/minio/minio/#!)
 - [Milvus docker compose](https://milvus.io/docs/install_standalone-docker-compose.md)
-- [Label studio docker compose](https://labelstud.io/tutorials/segment_anything_model#Using-Docker-Compose-recommended)
+- [Label Studio docker compose](https://labelstud.io/tutorials/segment_anything_model#Using-Docker-Compose-recommended)
 - [MLflow docker image](https://github.com/mlflow/mlflow/pkgs/container/mlflow)
 - [Langfuse repo](https://github.com/langfuse/langfuse)
 - [pgAdmin docker documentation](https://www.pgadmin.org/docs/pgadmin4/8.8/container_deployment.html)
 - [attu github](https://github.com/zilliztech/attu)
+#### Kubernetes
+TODO
 
 ### Troubleshooting
 - #### Insufficient resources
@@ -67,7 +83,7 @@ docker-compose up -d
 - MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup.
 - Langfuse: no official image for arm
 
-### Full list of dependencies:
+### List of dependencies:
 - PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
 - MinIO: [repo](https://github.com/minio/minio)
 - Milvus: [repo](https://github.com/milvus-io/milvus)
