@@ -12,7 +12,7 @@ services:
       - minio:/data
     entrypoint: sh
     command: -c 'mkdir -p /data/mlflow && minio server /data --console-address ":9001"'
-      
+
     healthcheck:
       test: mc ready local
       interval: 15s

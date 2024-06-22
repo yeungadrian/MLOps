@@ -11,10 +11,10 @@ Simple modern open source mlops.
 - Experiment Tracking (MLflow)
 - LLM Observability (Langfuse)
 - Admin Tools:
-    - pgAdmin: PostgreSQL 
+    - pgAdmin: PostgreSQL
     - Attu: Milvus
 
-## Getting started 
+## Getting started
 This setup requires docker and docker compose. The easiest way to get started is to install [docker desktop](https://docs.docker.com/desktop/install/mac-install/).
 
 Create a .env file with the following keys. Values below are only placeholders.
