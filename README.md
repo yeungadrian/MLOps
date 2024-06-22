@@ -68,19 +68,11 @@ docker-compose up -d
 - Langfuse: no official image for arm
 
 ### Full list of dependencies:
-- PostgreSQL:
-    - [repo (mirror)](https://github.com/postgres/postgres)
-- MinIO:
-    - [repo](https://github.com/minio/minio)
-- Milvus:
-    - [repo](https://github.com/milvus-io/milvus)
-- Label Studio:
-    - [repo](https://github.com/HumanSignal/label-studio)
-- MLflow:
-    - [repo](https://github.com/mlflow/mlflow)
-- Langfuse:
-    - [repo](https://github.com/zilliztech/attu)
-- pgAdmin:
-    - [repo](https://github.com/pgadmin-org/pgadmin4)
-- attu:
-    - [repo](https://github.com/zilliztech/attu)
+- PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
+- MinIO: [repo](https://github.com/minio/minio)
+- Milvus: [repo](https://github.com/milvus-io/milvus)
+- Label Studio: [repo](https://github.com/HumanSignal/label-studio)
+- MLflow: [repo](https://github.com/mlflow/mlflow)
+- Langfuse: [repo](https://github.com/zilliztech/attu)
+- pgAdmin: [repo](https://github.com/pgadmin-org/pgadmin4)
+- attu: [repo](https://github.com/zilliztech/attu)
