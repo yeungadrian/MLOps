@@ -1,5 +1,5 @@
 # MLOps
-Simple modern open source mlops.
+Simple modern open source mlops
 
 - [MLOps](#mlops)
   - [Requirements](#requirements)
@@ -72,15 +72,15 @@ TODO
 ## Troubleshooting
 - Insufficient resources
     - Docker compose has been setup with minimum specs for my setup
-    - Potential to run into out of memory exceptions on different setups / with newer version.
+    - Potential to run into out of memory exceptions on different setups / with newer version
     - Remove deploy section under each service as a quick workaround
 - Latest version may introduce breaking changes
-    - Images all currently point at the latest version of each service, which may require additional changes not present yet.
+    - Images all currently point at the latest version of each service, which may require additional changes not present yet
 
 ## Clunky aspects
 - MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image)
-- postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
-- MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup.
+- postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty
+- MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup
 - Langfuse: no official image for arm
 
 ## List of dependencies
