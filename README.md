@@ -18,7 +18,7 @@ Simple modern open source mlops.
 ### Design
 ![Alt text](assets/mlops.png)
 
-### Setup 
+### Quickstart 
 1. Create ..env file
 ```
 POSTGRES_DATABASE=postgres
