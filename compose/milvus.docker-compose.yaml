@@ -1,7 +1,7 @@
 services:
   etcd:
     container_name: milvus-etcd
-    image: quay.io/coreos/etcd:v3.5.5
+    image: quay.io/coreos/etcd:latest
     environment:
       - ETCD_AUTO_COMPACTION_MODE=revision
       - ETCD_AUTO_COMPACTION_RETENTION=1000
@@ -26,7 +26,7 @@ services:
 
   standalone:
     container_name: milvus-standalone
-    image: milvusdb/milvus:v2.4.5
+    image: milvusdb/milvus:latest
     command: ["milvus", "run", "standalone"]
     security_opt:
     - seccomp:unconfined
@@ -60,7 +60,7 @@ services:
 
   attu:
     container_name: milvus-attu
-    image: zilliz/attu:v2.4
+    image: zilliz/attu:latest
     environment:
       MILVUS_URL: milvus-standalone:19530
     ports:
