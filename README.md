@@ -1,23 +1,8 @@
 # MLOps
-Simple modern open source mlops
+Simple modern open source mlops.
 
-- [MLOps](#mlops)
-  - [Requirements](#requirements)
-  - [Applications](#applications)
-  - [Design](#design)
-  - [Quickstart](#quickstart)
-  - [Roadmap](#roadmap)
-  - [Resources](#resources)
-    - [Docker](#docker)
-    - [Kubernetes](#kubernetes)
-  - [Troubleshooting](#troubleshooting)
-  - [Clunky aspects](#clunky-aspects)
-  - [List of dependencies](#list-of-dependencies)
-
-
-## Requirements
-- Free and open source
-- Simple to deploy
+## Design
+![Alt text](assets/mlops.png)
 
 ## Applications
 - Data stores (MinIO & PostgreSQL)
@@ -26,14 +11,13 @@ Simple modern open source mlops
 - Experiment Tracking (MLflow)
 - LLM Observability (Langfuse)
 - Admin Tools 
-    - pgAdmin: PostgreSQL 
-    - Attu: Milvus
+    - pgAdmin: postgreSQL 
+    - attu: Milvus
 
-## Design
-![Alt text](assets/mlops.png)
+## Getting started 
+This setup requires docker and docker compose. Easiest way to get started is to install docker desktop.
 
-## Quickstart 
-1. Create ..env file
+Create a .env file with the following. Values below are only placeholders.
 ```
 POSTGRES_DATABASE=postgres
 POSTGRES_HOST=postgres
@@ -48,7 +32,7 @@ MINIO_ROOT_USER=minio
 MINIO_ROOT_PASSWORD=password
 ```
 
-2. Run script
+Run following command
 ```
 docker-compose up -d
 ```
@@ -72,15 +56,15 @@ TODO
 ## Troubleshooting
 - Insufficient resources
     - Docker compose has been setup with minimum specs for my setup
-    - Potential to run into out of memory exceptions on different setups / with newer version
+    - Potential to run into out of memory exceptions on different setups / with newer version.
     - Remove deploy section under each service as a quick workaround
 - Latest version may introduce breaking changes
-    - Images all currently point at the latest version of each service, which may require additional changes not present yet
+    - Images all currently point at the latest version of each service, which may require additional changes not present yet.
 
 ## Clunky aspects
 - MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image)
-- postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty
-- MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup
+- postgreSQL: Setting up multiple databases. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
+- MinIO: separate container created to create bucket for MLflow. Left with "dead" container after setup.
 - Langfuse: no official image for arm
 
 ## List of dependencies
@@ -91,4 +75,4 @@ TODO
 - MLflow: [repo](https://github.com/mlflow/mlflow)
 - Langfuse: [repo](https://github.com/zilliztech/attu)
 - pgAdmin: [repo](https://github.com/pgadmin-org/pgadmin4)
-- Attu: [repo](https://github.com/zilliztech/attu)
+- attu: [repo](https://github.com/zilliztech/attu)
