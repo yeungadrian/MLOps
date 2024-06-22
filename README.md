@@ -5,14 +5,14 @@ Simple modern open source mlops.
 ![Alt text](assets/mlops.png)
 
 ## Applications
-- Data stores (MinIO & PostgreSQL)
+- Data storage (MinIO & PostgreSQL)
 - Vector store (Milvus)
 - Data labeller (Label Studio)
 - Experiment Tracking (MLflow)
 - LLM Observability (Langfuse)
 - Admin Tools 
-    - pgAdmin: postgreSQL 
-    - attu: Milvus
+    - pgAdmin: PostgreSQL 
+    - Attu: Milvus
 
 ## Getting started 
 This setup requires docker and docker compose. Easiest way to get started is to install docker desktop.
