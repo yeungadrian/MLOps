@@ -1,5 +1,5 @@
 # MLOps
-Simple modern open source mlops.
+Simple modern open source mlops
 
 ## Design
 ![Alt text](assets/mlops.png)
