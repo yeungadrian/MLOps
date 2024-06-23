@@ -1,5 +1,5 @@
 # MLOps
-Simple open source MLOps.
+Simple open source MLOps with docker compose.
 
 ## Design
 ![Alt text](assets/mlops.png)
