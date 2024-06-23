@@ -17,7 +17,7 @@ Simple open source MLOps.
 ## Getting started
 This setup requires docker and docker compose. The easiest way to get started is to install [docker desktop](https://docs.docker.com/desktop/install/mac-install/).
 
-Create a .env file with the following keys. Values below are only placeholders.
+Create a .env file with the following keys. Values below are only placeholders and can be freely changed.
 ```
 POSTGRES_DATABASE=postgres
 POSTGRES_HOST=postgres
@@ -36,7 +36,7 @@ Now run the following command:
 docker-compose up -d
 ```
 
-Once the applications have started and are ready, you can access the applications on the following urls:
+Once the applications have started and are ready, you can access them on the following urls:
 - pgAdmin: [http://localhost:15432](http://localhost:15432)
 - MLflow: [http://localhost:5001](http://localhost:5001)
 - MinIO: [http://localhost:9001](http://localhost:9001)
@@ -49,11 +49,7 @@ docker-compose pull
 docker-compose up -d
 ```
 
-## Roadmap
-- [ ] Minikube / kind setup
-
 ## Resources
-### Docker
 - [PostgreSQL docker documentation](https://hub.docker.com/_/postgres/)
 - [MinIO dockerhub](https://hub.docker.com/r/minio/minio/#!)
 - [Milvus docker compose](https://milvus.io/docs/install_standalone-docker-compose.md)
@@ -62,8 +58,6 @@ docker-compose up -d
 - [Langfuse repo](https://github.com/langfuse/langfuse)
 - [pgAdmin docker documentation](https://www.pgadmin.org/docs/pgadmin4/8.8/container_deployment.html)
 - [Attu github](https://github.com/zilliztech/attu)
-### Kubernetes
-TODO
 
 ## Troubleshooting
 - Insufficient resources
