@@ -2,7 +2,6 @@ services:
   postgres:
     container_name: postgres
     image: postgres:latest
-    restart: always
     environment:
       - POSTGRES_DATABASE=${POSTGRES_DATABASE}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -39,7 +38,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-        restart: true
     deploy:
       resources:
         limits:

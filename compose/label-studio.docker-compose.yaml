@@ -3,7 +3,6 @@ services:
     container_name: label-studio-nginx
     build: .
     image: heartexlabs/label-studio:latest
-    restart: unless-stopped
     ports:
       - "8080:8085"
       - "8081:8086"
@@ -29,13 +28,11 @@ services:
     tty: true
     build: .
     image: heartexlabs/label-studio:latest
-    restart: unless-stopped
     expose:
       - "8000"
     depends_on:
       postgres:
         condition: service_healthy
-        restart: true
     environment:
       - DJANGO_DB=default
       - POSTGRE_NAME=labelstudio

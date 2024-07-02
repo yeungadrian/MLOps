@@ -1,15 +1,12 @@
 services:
   mlflow:
     container_name: mlflow
-    restart: always
     image: ghcr.io/mlflow/mlflow:latest
     depends_on:
       postgres:
         condition: service_healthy
-        restart: true
       minio:
         condition: service_healthy
-        restart: true
     environment:
       - GUNICORN_THREADS=1
       - MLFLOW_S3_ENDPOINT_URL=http://minio:9000

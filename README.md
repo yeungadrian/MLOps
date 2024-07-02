@@ -49,6 +49,10 @@ docker-compose pull
 docker-compose up -d
 ```
 
+## Potential alternatives
+- [Argilla](https://argilla.io/) over label-studio. Argilla acquired by hugging face, but not yet as mature.
+
+
 ## Resources
 - [PostgreSQL docker documentation](https://hub.docker.com/_/postgres/)
 - [MinIO dockerhub](https://hub.docker.com/r/minio/minio/#!)
