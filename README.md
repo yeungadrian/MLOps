@@ -43,14 +43,6 @@ docker-compose pull
 docker-compose up -d
 ```
 
-## List of components
-- PostgreSQL: [repo (mirror)](https://github.com/postgres/postgres)
-- MinIO: [repo](https://github.com/minio/minio)
-- Qdrant: [repo](https://github.com/qdrant/qdrant)
-- Label Studio: [repo](https://github.com/HumanSignal/label-studio)
-- MLflow: [repo](https://github.com/mlflow/mlflow)
-- Langfuse: [repo](https://github.com/langfuse/langfuse)
-
 ## Clunky aspects
 - MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image).
 - postgreSQL: Setting up databases per application. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
