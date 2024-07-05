@@ -1,7 +1,7 @@
 include:
   - compose/pg.docker-compose.yaml
   - compose/minio.docker-compose.yaml
+  - compose/qdrant.docker-compose.yaml
   - compose/label-studio.docker-compose.yaml
-  - compose/langfuse.docker-compose.yaml #Requires: pg
-  - compose/milvus.docker-compose.yaml #Requires: minio
-  - compose/mlflow.docker-compose.yaml #Requires: minio + pg
+  - compose/langfuse.docker-compose.yaml # Requires: pg
+  - compose/mlflow.docker-compose.yaml # Requires: minio + pg
