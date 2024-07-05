@@ -46,9 +46,3 @@ docker-compose up -d
 ## Clunky aspects
 - MLflow: no official image containing psycopg2. Workaround of running `pip install psycopg2` prior to launching server. (Not enough benefits to create custom image).
 - postgreSQL: Setting up databases per application. Mounting init-db.sql to docker-entrypoint-initdb.d folder which is automatically run only if postgres volume is empty.
-
-## Troubleshooting
-- Insufficient resources
-    - Docker compose has been setup with minimum specs
-    - Potential to run into out of memory exceptions on different setups / with newer version.
-    - Remove deploy section under each service as a quick workaround
