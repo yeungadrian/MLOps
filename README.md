@@ -26,6 +26,9 @@ docker-compose up -d
 Once the applications have started and are ready, you can access them on the following urls:
 - MLflow: [http://localhost:5001](http://localhost:5001)
 - MinIO: [http://localhost:9001](http://localhost:9001)
+- Qdrant: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
+- Langfuse: [http://localhost:3000](http://localhost:3000)
+- Argilla: [http://localhost:6900](http://localhost:6900)
 
 ## Applications
 - [PostgreSQL (SQL)](https://github.com/postgres/postgres)
