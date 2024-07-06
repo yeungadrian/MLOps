@@ -1,4 +1,4 @@
-# Open Source MLOps
+# MLOps
 Simple open source MLOps stack with docker compose.
 
 ## Design

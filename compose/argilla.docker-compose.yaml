@@ -3,22 +3,23 @@ services:
     container_name: argilla
     image: argilla/argilla-quickstart:latest
     environment:
-      ARGILLA_ENABLE_TELEMETRY: 0
-      ARGILLA_BASE_URL: /
-      ARGILLA_AUTH_SECRET_KEY: ${ARGILLA_AUTH_SECRET_KEY}
+      - ARGILLA_ENABLE_TELEMETRY=0
+      - ARGILLA_BASE_URL=/
+      - ARGILLA_AUTH_SECRET_KEY=${ARGILLA_AUTH_SECRET_KEY}
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # Change if you require elasticsearch to handle larger volume of data
     ports:
       - "6900:6900"
-    volumes:
+    volumes: # Persist argilla data to docker volume
       - argilla:/data:rw
       - argilla:/var/lib/argilla
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: 800M
+          cpus: ".4"
+          memory: 1.2GB
         reservations:
-          cpus: "1"
-          memory: 800M
-
+          cpus: ".25"
+          memory: 800M # Argilla fairly memory intensive
 volumes:
   argilla:
