@@ -11,6 +11,7 @@ services:
     volumes:
       - minio:/data
     entrypoint: sh
+    # MinIO uses existing folders for bucket
     command: -c 'mkdir -p /data/mlflow && minio server /data --console-address ":9001"'
     healthcheck:
       test: mc ready local

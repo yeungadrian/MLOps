@@ -31,7 +31,7 @@ Once the applications have started and are ready, you can access them on the fol
 - [PostgreSQL (SQL)](https://github.com/postgres/postgres)
 - [MinIO (object storage)](https://github.com/minio/minio)
 - [Qdrant (vector search)](https://github.com/qdrant/qdrant)
-- [Label Studio (data annotation)](https://github.com/HumanSignal/label-studio)
+- [Argilla (data annotation)](https://github.com/argilla-io/argilla)
 - [MLflow (experiment tracking & model registry)](https://github.com/mlflow/mlflow)
 - [Langfuse (LLM observability)](https://github.com/langfuse/langfuse)
 

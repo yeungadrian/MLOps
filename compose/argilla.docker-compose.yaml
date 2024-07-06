@@ -1,0 +1,24 @@
+services:
+  argilla:
+    container_name: argilla
+    image: argilla/argilla-quickstart:latest
+    environment:
+      ARGILLA_ENABLE_TELEMETRY: 0
+      ARGILLA_BASE_URL: /
+      ARGILLA_AUTH_SECRET_KEY: ${ARGILLA_AUTH_SECRET_KEY}
+    ports:
+      - "6900:6900"
+    volumes:
+      - argilla:/data:rw
+      - argilla:/var/lib/argilla
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 800M
+        reservations:
+          cpus: "1"
+          memory: 800M
+
+volumes:
+  argilla:
