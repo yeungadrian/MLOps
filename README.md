@@ -20,7 +20,7 @@ MINIO_ROOT_PASSWORD=password
 
 Now run the following command:
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Once the applications have started and are ready, you can access them on the following urls:
@@ -41,9 +41,9 @@ Once the applications have started and are ready, you can access them on the fol
 ## Updating images
 The following commands will stop the containers, update images if new versions have been published and redeploy containers.
 ```
-docker-compose stop
-docker-compose pull
-docker-compose up -d
+docker compose stop
+docker compose pull
+docker compose up -d
 ```
 
 ## Clunky aspects
