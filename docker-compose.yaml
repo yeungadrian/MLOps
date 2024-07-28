@@ -3,6 +3,7 @@ include:
   - compose/minio.docker-compose.yaml
   - compose/qdrant.docker-compose.yaml
   - compose/argilla.docker-compose.yaml # Argilla is still fairly new.
+  - compose/prefect.docker-compose.yaml
   # - compose/label-studio.docker-compose.yaml # Label studio as an alternative to argilla
   - compose/langfuse.docker-compose.yaml # Requires: pg
   - compose/mlflow.docker-compose.yaml # Requires: minio + pg
