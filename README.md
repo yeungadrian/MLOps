@@ -13,6 +13,7 @@ POSTGRES_DATABASE=postgres
 POSTGRES_HOST=postgres
 POSTGRES_PASSWORD=password
 POSTGRES_PORT=5432
+POSTGRES_USER=postgres
 
 MINIO_ROOT_USER=minio
 MINIO_ROOT_PASSWORD=password
@@ -27,7 +28,6 @@ Once the applications have started and are ready, you can access them on the fol
 - MLflow: [http://localhost:5001](http://localhost:5001)
 - MinIO: [http://localhost:9001](http://localhost:9001)
 - Qdrant: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
-- Langfuse: [http://localhost:3000](http://localhost:3000)
 - Argilla: [http://localhost:6900](http://localhost:6900)
 
 ## Applications
@@ -36,7 +36,6 @@ Once the applications have started and are ready, you can access them on the fol
 - [Qdrant (vector search)](https://github.com/qdrant/qdrant)
 - [Argilla (data annotation)](https://github.com/argilla-io/argilla)
 - [MLflow (experiment tracking & model registry)](https://github.com/mlflow/mlflow)
-- [Langfuse (LLM observability)](https://github.com/langfuse/langfuse)
 
 ## Updating images
 The following commands will stop the containers, update images if new versions have been published and redeploy containers.

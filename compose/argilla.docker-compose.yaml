@@ -1,25 +1,71 @@
+x-common-variables: &common-variables
+  ARGILLA_HOME_PATH: /var/lib/argilla
+  ARGILLA_ELASTICSEARCH: http://elasticsearch:9200
+  ARGILLA_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/argilla
+  ARGILLA_REDIS_URL: redis://redis:6379/0
+
 services:
   argilla:
-    container_name: argilla
-    image: argilla/argilla-quickstart:latest
-    environment:
-      - ARGILLA_ENABLE_TELEMETRY=0
-      - ARGILLA_BASE_URL=/
-      - ARGILLA_AUTH_SECRET_KEY=${ARGILLA_AUTH_SECRET_KEY}
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # Change if you require elasticsearch to handle larger volume of data
+    image: argilla/argilla-server:latest
+    restart: unless-stopped
     ports:
       - "6900:6900"
-    volumes: # Persist argilla data to docker volume
-      - argilla:/data:rw
-      - argilla:/var/lib/argilla
-    deploy:
-      resources:
-        limits:
-          cpus: ".4"
-          memory: 1.2GB
-        reservations:
-          cpus: ".25"
-          memory: 800M # Argilla fairly memory intensive
+    environment:
+      <<: *common-variables
+      USERNAME: argilla
+      PASSWORD: 12345678
+      API_KEY: argilla.apikey
+      WORKSPACE: default
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      # Uncomment the following line to reindex Argilla datasets into the search engine when starting up
+      # REINDEX_DATASETS: 1
+      # Opt-out for telemetry https://huggingface.co/docs/huggingface_hub/main/en/package_reference/utilities#huggingface_hub.utils.send_telemetry
+      HF_HUB_DISABLE_TELEMETRY: 1
+      # Opt-out for telemetry https://huggingface.co/docs/huggingface_hub/main/en/package_reference/utilities#huggingface_hub.utils.send_telemetry
+      HF_HUB_OFFLINE: 1
+    volumes:
+      # ARGILLA_HOME_PATH is used to define where Argilla will save it's application data.
+      # If you change ARGILLA_HOME_PATH value please copy that same value to argilladata volume too.
+      - argilladata:/var/lib/argilla
+    depends_on:
+      - postgres
+      - elasticsearch
+      - redis
+
+  worker:
+    image: argilla/argilla-server:latest
+    environment:
+      <<: *common-variables
+      BACKGROUND_NUM_WORKERS: 2
+    depends_on:
+      - postgres
+      - elasticsearch
+      - redis
+    command: sh -c 'python -m argilla_server worker --num-workers $${BACKGROUND_NUM_WORKERS}'
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-argilla-local
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticdata:/usr/share/elasticsearch/data/
+
+  redis:
+    image: redis
+
+
 volumes:
-  argilla:
+  argilladata:
+  elasticdata:
